@@ -49,6 +49,9 @@
   gap: 6rem;
   max-width: 1200px;
   width: 100%;
+}
+
+.content-wrapper.animate-in {
   animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 

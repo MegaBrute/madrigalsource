@@ -54,6 +54,8 @@ function ImageCarousel({ project = 'boostboard' }) {
           src={images[currentIndex]}
           alt={`Screenshot ${currentIndex + 1}`}
           className="carousel-image"
+          width="400"
+          height="500"
         />
       </div>
 

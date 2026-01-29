@@ -33,6 +33,7 @@ export const projects = {
 function App() {
   const [currentProject, setCurrentProject] = useState('boostboard');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState('left');
   const pendingProject = useRef(null);
   const project = projects[currentProject];
@@ -51,17 +52,24 @@ function App() {
 
     setTimeout(() => {
       setCurrentProject(newProject);
+      setShouldAnimate(true);
       setTimeout(() => {
         setIsTransitioning(false);
       }, 50);
     }, 300);
   };
 
+  const getWrapperClass = () => {
+    if (isTransitioning) return `content-wrapper transitioning-${transitionDirection}`;
+    if (shouldAnimate) return 'content-wrapper animate-in';
+    return 'content-wrapper';
+  };
+
   return (
     <div className={`app theme-${project.theme}`}>
       <Navbar currentProject={currentProject} onProjectChange={handleProjectChange} />
       <main className="main-content">
-        <div className={`content-wrapper ${isTransitioning ? `transitioning-${transitionDirection}` : ''}`}>
+        <div className={getWrapperClass()}>
           <ImageCarousel project={currentProject} />
           <ProjectDetails project={project} />
         </div>
