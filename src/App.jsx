@@ -26,7 +26,7 @@ export const projects = {
     description: 'A lightweight, interactive visualization of CDC health data across US states and territories. Explore disease statistics with an intuitive map interface.',
     secondary: 'View health metrics by region with filtering and detailed breakdowns.',
     techStack: ['flutter', 'netlify'],
-    repoUrl: 'https://github.com/MegaBrute',
+    repoUrl: 'https://github.com/MegaBrute/CDCLite',
   },
 };
 
