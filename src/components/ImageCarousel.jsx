@@ -20,6 +20,14 @@ function ImageCarousel({ project = 'boostboard' }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = projectImages[project] || projectImages.boostboard;
 
+  // Preload all images on mount
+  useEffect(() => {
+    Object.values(projectImages).flat().forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   // Reset to first image when project changes
   useEffect(() => {
     setCurrentIndex(0);

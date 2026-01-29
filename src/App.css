@@ -8,12 +8,16 @@
 
 /* Green theme (BoostBoard) */
 .app.theme-green {
-  background: linear-gradient(135deg, #1a2a1a 0%, #0d1a0d 25%, #1a1a2a 50%, #0d1a0d 75%, #1a2a1a 100%);
+  --theme-color: #4ade80;
+  --theme-color-rgb: 74, 222, 128;
+  background: linear-gradient(135deg, #1a2a1a 0%, #0d1a0d 25%, #1a1a1a 50%, #0d1a0d 75%, #1a2a1a 100%);
   background-size: 200% 200%;
 }
 
 /* Blue theme (CDC Lite) */
 .app.theme-blue {
+  --theme-color: #3b82f6;
+  --theme-color-rgb: 59, 130, 246;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%);
   background-size: 200% 200%;
 }
