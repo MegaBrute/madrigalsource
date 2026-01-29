@@ -1,0 +1,118 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-size: 200% 200%;
+  animation: gradientShift 20s ease infinite;
+}
+
+/* Green theme (BoostBoard) */
+.app.theme-green {
+  background: linear-gradient(135deg, #1a2a1a 0%, #0d1a0d 25%, #1a1a2a 50%, #0d1a0d 75%, #1a2a1a 100%);
+  background-size: 200% 200%;
+}
+
+/* Blue theme (CDC Lite) */
+.app.theme-blue {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%);
+  background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 4rem;
+}
+
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6rem;
+  max-width: 1200px;
+  width: 100%;
+  animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.content-wrapper.transitioning-left {
+  animation: slideOutLeft 0.3s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+.content-wrapper.transitioning-right {
+  animation: slideOutRight 0.3s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-60px) scale(0.9);
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(60px) scale(0.9);
+  }
+}
+
+@media (max-width: 1000px) {
+  .main-content {
+    padding: 1.5rem;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+    align-items: flex-start;
+  }
+
+  .content-wrapper {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .main-content {
+    padding: 0.75rem;
+  }
+}

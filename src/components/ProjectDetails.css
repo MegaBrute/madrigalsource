@@ -1,0 +1,166 @@
+.project-details {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.details-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1.5rem 0;
+}
+
+.details-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 1rem 0;
+  max-width: 450px;
+}
+
+.details-secondary {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 2rem 0;
+}
+
+.built-with {
+  margin-bottom: 2rem;
+}
+
+.built-with-label {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.75rem;
+}
+
+.tech-pills {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tech-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.65rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  transition: all 0.2s ease;
+}
+
+.tech-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.tech-pill svg {
+  flex-shrink: 0;
+}
+
+.tech-pill-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.open-source-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.open-source-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .project-details {
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .details-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .details-description {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  .details-secondary {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .built-with {
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+
+  .tech-pills {
+    justify-content: center;
+  }
+
+  .tech-pill {
+    padding: 0.4rem 0.75rem 0.4rem 0.5rem;
+  }
+
+  .tech-pill-name {
+    font-size: 0.8rem;
+  }
+
+  .open-source-btn {
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .details-title {
+    font-size: 1.75rem;
+  }
+
+  .details-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .tech-pill {
+    padding: 0.35rem 0.6rem 0.35rem 0.4rem;
+    gap: 0.35rem;
+  }
+
+  .tech-pill svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tech-pill-name {
+    font-size: 0.75rem;
+  }
+}
