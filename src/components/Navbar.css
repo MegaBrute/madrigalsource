@@ -154,6 +154,48 @@
   flex-shrink: 0;
 }
 
+.contact-card-repo {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.repo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.repo-link:hover {
+  color: #fff;
+}
+
+.repo-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.repo-tech-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.repo-tech-pill svg {
+  flex-shrink: 0;
+}
+
 .navbar-center {
   position: absolute;
   left: 50%;
