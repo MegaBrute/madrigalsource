@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import miguelImg from '../assets/miguel.png';
 import gmImg from '../assets/gm.png';
+import cdcIco from '../assets/cdc.ico';
 import './Navbar.css';
 
 const projects = [
@@ -15,6 +16,9 @@ function Navbar({ currentProject, onProjectChange }) {
   const prevProject = useRef(currentProject);
 
   const current = projects.find(p => p.id === currentProject) || projects[0];
+  const iconSrc = current.id === 'cdclite'
+    ? cdcIco
+    : `https://www.google.com/s2/favicons?domain=${new URL(current.siteUrl).hostname}&sz=32`;
 
   useEffect(() => {
     if (prevProject.current !== currentProject) {
@@ -136,7 +140,7 @@ function Navbar({ currentProject, onProjectChange }) {
             title={`Visit ${current.name}`}
           >
             <img
-              src={`https://www.google.com/s2/favicons?domain=${new URL(current.siteUrl).hostname}&sz=32`}
+              src={iconSrc}
               alt={current.name}
               className="site-icon"
             />
