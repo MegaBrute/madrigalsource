@@ -4,15 +4,24 @@ import ImageCarousel from './components/ImageCarousel';
 import ProjectDetails from './components/ProjectDetails';
 import projects from './data/projects';
 import './App.css';
+import gmImg from './assets/gm.png';
 
 function App() {
   const storageKey = 'madrigal:currentProject';
+  const splashKey = 'madrigal:gmSplashShown';
   const [currentProject, setCurrentProject] = useState(() => {
     try {
       const saved = localStorage.getItem(storageKey);
       return saved && projects[saved] ? saved : 'boostboard';
     } catch {
       return 'boostboard';
+    }
+  });
+  const [showSplash, setShowSplash] = useState(() => {
+    try {
+      return !localStorage.getItem(splashKey);
+    } catch {
+      return true;
     }
   });
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -53,8 +62,22 @@ function App() {
     return 'content-wrapper';
   };
 
+  const handleSplashEnd = () => {
+    setShowSplash(false);
+    try {
+      localStorage.setItem(splashKey, 'true');
+    } catch {
+      // Ignore persistence errors (private mode, disabled storage, etc.)
+    }
+  };
+
   return (
     <div className={`app theme-${project.theme}`}>
+      {showSplash && (
+        <div className="gm-splash" onAnimationEnd={handleSplashEnd}>
+          <img src={gmImg} alt="Graffiti welcome" className="gm-splash-img" />
+        </div>
+      )}
       <Navbar currentProject={currentProject} onProjectChange={handleProjectChange} />
       <main className="main-content">
         <div className={getWrapperClass()}>
