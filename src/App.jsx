@@ -2,36 +2,19 @@ import { useState, useRef } from 'react';
 import Navbar from './components/Navbar';
 import ImageCarousel from './components/ImageCarousel';
 import ProjectDetails from './components/ProjectDetails';
+import projects from './data/projects';
 import './App.css';
 
-// Project configurations
-export const projects = {
-  boostboard: {
-    id: 'boostboard',
-    name: 'BoostBoard',
-    siteUrl: 'https://boostboard.app/',
-    theme: 'green',
-    title: 'BoostBoard',
-    description: 'Lightweight presence boards for sharing multiple links on dedicated pages. Live avatars, activity state, and frictionless chat keep collaborators in sync.',
-    secondary: 'Share up to 5 links per board with real-time presence.',
-    techStack: ['react', 'mui', 'vite', 'netlify'],
-    repoUrl: 'https://github.com/MegaBrute',
-  },
-  cdclite: {
-    id: 'cdclite',
-    name: 'CDC Lite',
-    siteUrl: 'https://cdclite.netlify.app/',
-    theme: 'blue',
-    title: 'CDC Lite',
-    description: 'A lightweight, interactive visualization of CDC health data across US states and territories. Explore disease statistics with an intuitive map interface.',
-    secondary: 'View health metrics by region with filtering and detailed breakdowns.',
-    techStack: ['flutter', 'netlify'],
-    repoUrl: 'https://github.com/MegaBrute/CDCLite',
-  },
-};
-
 function App() {
-  const [currentProject, setCurrentProject] = useState('boostboard');
+  const storageKey = 'madrigal:currentProject';
+  const [currentProject, setCurrentProject] = useState(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      return saved && projects[saved] ? saved : 'boostboard';
+    } catch {
+      return 'boostboard';
+    }
+  });
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState('left');
@@ -52,6 +35,11 @@ function App() {
 
     setTimeout(() => {
       setCurrentProject(newProject);
+      try {
+        localStorage.setItem(storageKey, newProject);
+      } catch {
+        // Ignore persistence errors (private mode, disabled storage, etc.)
+      }
       setShouldAnimate(true);
       setTimeout(() => {
         setIsTransitioning(false);

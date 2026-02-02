@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import miguelImg from '../assets/miguel.png';
 import gmImg from '../assets/gm.png';
@@ -12,24 +12,11 @@ const projects = [
 
 function Navbar({ currentProject, onProjectChange }) {
   const [showContactCard, setShowContactCard] = useState(false);
-  const [iconAnimating, setIconAnimating] = useState(false);
-  const prevProject = useRef(currentProject);
 
   const current = projects.find(p => p.id === currentProject) || projects[0];
   const iconSrc = current.id === 'cdclite'
     ? cdcIco
     : `https://www.google.com/s2/favicons?domain=${new URL(current.siteUrl).hostname}&sz=32`;
-
-  useEffect(() => {
-    if (prevProject.current !== currentProject) {
-      setIconAnimating(true);
-      const timer = setTimeout(() => {
-        setIconAnimating(false);
-      }, 400);
-      prevProject.current = currentProject;
-      return () => clearTimeout(timer);
-    }
-  }, [currentProject]);
 
   return (
     <nav className="navbar">
@@ -131,12 +118,13 @@ function Navbar({ currentProject, onProjectChange }) {
       </div>
 
       <div className="navbar-right">
-        {current.siteUrl && (
+        {current.siteUrl && ([
           <a
+            key={current.id}
             href={current.siteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`site-link ${iconAnimating ? 'icon-swap' : ''}`}
+            className="site-link icon-swap"
             title={`Visit ${current.name}`}
           >
             <img
@@ -145,7 +133,7 @@ function Navbar({ currentProject, onProjectChange }) {
               className="site-icon"
             />
           </a>
-        )}
+        ])}
       </div>
     </nav>
   );
