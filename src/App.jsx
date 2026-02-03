@@ -29,6 +29,7 @@ function App() {
       return true;
     }
   });
+  const [splashNonce, setSplashNonce] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState('left');
@@ -85,6 +86,11 @@ function App() {
     }
   };
 
+  const triggerSplash = () => {
+    setShowSplash(true);
+    setSplashNonce((prev) => prev + 1);
+  };
+
   return (
     <div className={`app theme-${project.theme}`}>
       <div
@@ -92,11 +98,20 @@ function App() {
         aria-hidden="true"
       />
       {showSplash && (
-        <div className="gm-splash" onAnimationEnd={handleSplashEnd}>
-          <img src={gmImg} alt="Graffiti welcome" className="gm-splash-img" />
+        <div className="gm-splash" onAnimationEnd={handleSplashEnd} key={splashNonce}>
+          <img
+            src={gmImg}
+            alt="Graffiti welcome"
+            className="gm-splash-img"
+            onClick={triggerSplash}
+          />
         </div>
       )}
-      <Navbar currentProject={currentProject} onProjectChange={handleProjectChange} />
+      <Navbar
+        currentProject={currentProject}
+        onProjectChange={handleProjectChange}
+        onTriggerSplash={triggerSplash}
+      />
       <main className="main-content">
         <div className={getWrapperClass()} key={currentProject}>
           <ImageCarousel project={currentProject} />

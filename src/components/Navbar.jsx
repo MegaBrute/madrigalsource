@@ -10,8 +10,9 @@ const projects = [
   { id: 'cdclite', name: 'CDC Lite', siteUrl: 'https://cdclite.netlify.app/' },
 ];
 
-function Navbar({ currentProject, onProjectChange }) {
+function Navbar({ currentProject, onProjectChange, onTriggerSplash }) {
   const [showContactCard, setShowContactCard] = useState(false);
+  const [contactCardClosing, setContactCardClosing] = useState(false);
 
   const current = projects.find(p => p.id === currentProject) || projects[0];
   const iconSrc = current.id === 'cdclite'
@@ -23,7 +24,18 @@ function Navbar({ currentProject, onProjectChange }) {
       <div className="navbar-left">
         <button
           className="profile-cta"
-          onClick={() => setShowContactCard(!showContactCard)}
+          onClick={() => {
+            if (showContactCard) {
+              setContactCardClosing(true);
+              setTimeout(() => {
+                setShowContactCard(false);
+                setContactCardClosing(false);
+              }, 200);
+            } else {
+              setShowContactCard(true);
+              setContactCardClosing(false);
+            }
+          }}
         >
           <img src={miguelImg} alt="Miguel Madrigal" className="profile-img" />
           <span className="profile-name">Miguel Madrigal</span>
@@ -32,12 +44,28 @@ function Navbar({ currentProject, onProjectChange }) {
 
       {showContactCard && createPortal(
         <>
-          <div className="contact-card-overlay" onClick={() => setShowContactCard(false)} />
-          <div className="contact-card">
+          <div
+            className={`contact-card-overlay ${contactCardClosing ? 'closing' : ''}`}
+            onClick={() => {
+              setContactCardClosing(true);
+              setTimeout(() => {
+                setShowContactCard(false);
+                setContactCardClosing(false);
+              }, 200);
+            }}
+          />
+          <div className={`contact-card ${contactCardClosing ? 'closing' : ''}`}>
             <div className="contact-card-header">
               <img src={miguelImg} alt="Miguel Madrigal" className="contact-card-img" />
               <h3>Miguel Madrigal</h3>
-              <img src={gmImg} alt="" className="contact-card-gm" />
+              <button
+                type="button"
+                className="contact-card-gm-button"
+                aria-label="Replay graffiti animation"
+                onClick={onTriggerSplash}
+              >
+                <img src={gmImg} alt="Graffiti" className="contact-card-gm" />
+              </button>
             </div>
             <div className="contact-card-links">
               <a

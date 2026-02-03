@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './ImageCarousel.css';
 
 import boostboard1 from '../assets/BoostBoard1.png';
@@ -19,13 +19,28 @@ const projectImages = {
 function ImageCarousel({ project = 'boostboard' }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = projectImages[project] || projectImages.boostboard;
+  const preloadRef = useRef([]);
 
   // Preload all images on mount
   useEffect(() => {
-    Object.values(projectImages).flat().forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    const preload = () => {
+      preloadRef.current = Object.values(projectImages).flat().map((src) => {
+        const img = new Image();
+        img.src = src;
+        if (img.decode) {
+          img.decode().catch(() => {});
+        }
+        return img;
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preload);
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = setTimeout(preload, 0);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // Reset to first image when project changes

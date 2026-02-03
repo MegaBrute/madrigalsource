@@ -55,6 +55,11 @@
   bottom: 0;
   z-index: 1000;
   background: transparent;
+  animation: fadeIn 0.2s ease;
+}
+
+.contact-card-overlay.closing {
+  animation: fadeOut 0.2s ease forwards;
 }
 
 .contact-card {
@@ -72,11 +77,25 @@
   overflow: hidden;
 }
 
+.contact-card.closing {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+.contact-card-gm-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 0 auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .contact-card-gm {
   width: 50px;
   height: auto;
   pointer-events: none;
-  margin-left: auto;
 }
 
 @keyframes fadeIn {
@@ -87,6 +106,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 }
 
@@ -369,6 +399,10 @@
     z-index: 1000;
   }
 
+  .contact-card-overlay.closing {
+    animation: fadeOut 0.25s ease forwards;
+  }
+
   .contact-card {
     position: fixed;
     top: auto;
@@ -385,6 +419,10 @@
     animation: slideUp 0.3s ease;
     box-sizing: border-box;
     z-index: 1001;
+  }
+
+  .contact-card.closing {
+    animation: slideDown 0.3s ease forwards;
   }
 
   .contact-card-header {
@@ -417,6 +455,15 @@
     margin-left: 0;
   }
 
+  .contact-card-gm-button {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    bottom: 10px;
+    right: 10px;
+    margin: 0;
+  }
+
   @keyframes slideUp {
     from {
       opacity: 0;
@@ -425,6 +472,17 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
     }
   }
 }
