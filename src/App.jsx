@@ -7,6 +7,9 @@ import './App.css';
 import gmImg from './assets/gm.png';
 
 function App() {
+  const exitDurationMs = 300;
+  const enterDurationMs = 400;
+  const overlayFadeMs = 200;
   const storageKey = 'madrigal:currentProject';
   const splashKey = 'madrigal:gmSplashShown';
   const [currentProject, setCurrentProject] = useState(() => {
@@ -17,6 +20,8 @@ function App() {
       return 'boostboard';
     }
   });
+  const [nextTheme, setNextTheme] = useState(null);
+  const [transitionPhase, setTransitionPhase] = useState('idle');
   const [showSplash, setShowSplash] = useState(() => {
     try {
       return !localStorage.getItem(splashKey);
@@ -38,6 +43,9 @@ function App() {
     const currentIndex = projectKeys.indexOf(currentProject);
     const newIndex = projectKeys.indexOf(newProject);
     setTransitionDirection(newIndex > currentIndex ? 'left' : 'right');
+    setNextTheme(projects[newProject]?.theme || null);
+    setTransitionPhase('in');
+    setShouldAnimate(false);
 
     pendingProject.current = newProject;
     setIsTransitioning(true);
@@ -49,11 +57,17 @@ function App() {
       } catch {
         // Ignore persistence errors (private mode, disabled storage, etc.)
       }
+      setIsTransitioning(false);
       setShouldAnimate(true);
+      setTransitionPhase('out');
       setTimeout(() => {
-        setIsTransitioning(false);
-      }, 50);
-    }, 300);
+        setShouldAnimate(false);
+      }, enterDurationMs);
+      setTimeout(() => {
+        setNextTheme(null);
+        setTransitionPhase('idle');
+      }, overlayFadeMs);
+    }, exitDurationMs);
   };
 
   const getWrapperClass = () => {
@@ -73,6 +87,10 @@ function App() {
 
   return (
     <div className={`app theme-${project.theme}`}>
+      <div
+        className={`theme-transition ${nextTheme ? `theme-${nextTheme}` : ''} ${isTransitioning ? `phase-${transitionPhase}` : ''}`}
+        aria-hidden="true"
+      />
       {showSplash && (
         <div className="gm-splash" onAnimationEnd={handleSplashEnd}>
           <img src={gmImg} alt="Graffiti welcome" className="gm-splash-img" />
@@ -80,7 +98,7 @@ function App() {
       )}
       <Navbar currentProject={currentProject} onProjectChange={handleProjectChange} />
       <main className="main-content">
-        <div className={getWrapperClass()}>
+        <div className={getWrapperClass()} key={currentProject}>
           <ImageCarousel project={currentProject} />
           <ProjectDetails project={project} />
         </div>
